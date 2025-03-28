@@ -10,3 +10,6 @@
 
 # SQLite Database
 database.db
+
+# Static files
+static/*
