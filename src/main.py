@@ -3,6 +3,8 @@ from typing import Union
 from fastapi.staticfiles import StaticFiles
 from .users import user_router
 from .files import file_router
+from .resources import resource_router
+
 from fastapi import FastAPI
 from . import db
 
@@ -17,3 +19,4 @@ def read_root():
 
 app.include_router(file_router)
 app.include_router(user_router)
+app.include_router(resource_router)
