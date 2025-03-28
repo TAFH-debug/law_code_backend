@@ -1,0 +1,12 @@
+# Code Editor config folders
+.vscode
+.idea
+
+# Virtual Env
+.venv
+
+# Python Cache
+*__pycache__*
+
+# SQLite Database
+database.db
