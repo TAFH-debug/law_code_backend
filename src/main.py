@@ -4,11 +4,7 @@ from fastapi import FastAPI
 from . import db
 
 
-
-def on_startup():
-    db.create_db_and_tables()
-
-app = FastAPI(on_startup=[on_startup])
+app = FastAPI(on_startup=[db.create_db_and_tables])
 
 
 @app.get("/")
