@@ -13,3 +13,6 @@ database.db
 
 # Static files
 static/*
+
+# Env files
+*.env*
