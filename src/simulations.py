@@ -20,8 +20,15 @@ async def create_simulation(simulation: SimulationCreate, session: SessionDep):
     return db_simulation
 
 @simulations_router.get("/")
-async def get_simulations(session: SessionDep):
-    return session.exec(select(Simulation)).all()
+async def get_simulations(session: SessionDep, limit: int = 6, page: int = 1):
+    simulations = session.exec(select(Simulation).limit(limit).offset((page - 1) * limit)).all()
+    pages = len(session.exec(select(Simulation)).all())
+    return {
+        "simulations": simulations,
+        "page": page,
+        "limit": limit,
+        "total_pages": (pages + limit - 1) // limit,
+    }
 
 @simulations_router.websocket("/ws")
 async def start_simulation(websocket: WebSocket, id: int, session: SessionDep):
