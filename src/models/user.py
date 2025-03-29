@@ -14,5 +14,4 @@ class UserCreate(SQLModel):
 class UserLogin(SQLModel):
     username: str
     password: str
-
-#beaver
+    
