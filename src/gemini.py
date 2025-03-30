@@ -10,12 +10,13 @@ client = genai.Client(api_key=Settings().GOOGLE_GEMINI_KEY)
 
 gemini_router = APIRouter(prefix="/negotiations")
 
+
 @gemini_router.websocket("/ws")
 async def negotiation(websocket: WebSocket):
     await websocket.accept()
     try:
         chat = client.chats.create(model="gemini-2.0-flash", config=types.GenerateContentConfig(
-            system_instruction="Ты тренер по подготовке полицейских. Твоя задача помочь пользователю по вопросам прав. Не форматируй ответ. Так же используй сайт Вот материалы для переговоров: \n" + DOCS
+            system_instruction="Ты тренер по подготовке полицейских. Твоя задача помочь пользователю по вопросам прав. Не форматируй ответ. Вот материалы для переговоров: \n" + DOCS
         ))
         while True:
             data = await websocket.receive_text()

@@ -4,6 +4,7 @@ from .files import file_router
 from .resources import resource_router
 from .gemini import gemini_router
 from .simulations import simulations_router
+from .history import history_router
 
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI
@@ -15,6 +16,7 @@ app.include_router(user_router)
 app.include_router(resource_router)
 app.include_router(gemini_router)
 app.include_router(simulations_router)
+app.include_router(history_router)
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 app.add_middleware(

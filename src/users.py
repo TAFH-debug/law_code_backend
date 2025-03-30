@@ -23,9 +23,19 @@ def me(session: SessionDep, payload: Payload = Depends(get_payload)):
     return user
 
 @user_router.put("/me")
-async def add(session: SessionDep, payload: Payload = Depends(get_payload), simulation_id: int | None = None, cyber_simulation_id: int | None = None, score: int | None = None):
+async def add(session: SessionDep, 
+              payload: Payload = Depends(get_payload), 
+              simulation_id: int | None = None, 
+              cyber_simulation_id: int | None = None, 
+              score: int | None = None,
+              history: int | None = None):
     db_user = session.exec(select(User).where(User.id == payload.id)).first()
     
+    if (history):
+        history_list = db_user.get_history()
+        history_list.append(history)
+        db_user.set_history(history_list)
+        
     if (simulation_id):
         psi = db_user.get_psi()
         psi.append(simulation_id)

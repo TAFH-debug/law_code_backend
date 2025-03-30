@@ -1,12 +1,19 @@
 import json
 from typing import List
-from sqlmodel import ARRAY, Column, Field, Integer, SQLModel
+from sqlmodel import  Field, SQLModel
 
 class UserBase(SQLModel):
     username: str = Field(index=True, unique=True)
     score: int = Field(default=0)
     passed_simulation_ids: str = Field(default="[]")
     passed_cyber_simulation_ids: str = Field(default="[]")
+    history: str = Field(default="[]")
+
+    def get_history(self) -> List[int]:
+        return json.loads(self.history) if self.history else []
+    
+    def set_history(self, new_values: List[int]):
+        self.history = json.dumps(new_values)
 
     def get_psi(self) -> List[int]:
         return json.loads(self.passed_simulation_ids) if self.passed_simulation_ids else []
@@ -20,8 +27,6 @@ class UserBase(SQLModel):
     def set_pcsi(self, new_values: List[int]):
         self.passed_cyber_simulation_ids = json.dumps(new_values)
     
-
-
         
 class User(UserBase, table=True):
     id: int | None = Field(default=None, primary_key=True)
